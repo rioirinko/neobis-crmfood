@@ -42,16 +42,6 @@ class RolesDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = RolesSerializer
 
 
-# class UsersViewSet(generics.ListCreateAPIView):
-#     queryset = Users.objects.all()
-#     serializer_class = UsersSerializer
-
-#
-# class UsersDetailView(generics.RetrieveUpdateDestroyAPIView):
-#     queryset = Users.objects.all()
-#     serializer_class = UsersSerializer
-
-
 class TablesViewSet(generics.ListCreateAPIView):
     queryset = Tables.objects.all()
     serializer_class = TablesSerializer
@@ -117,6 +107,3 @@ class MealsDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = MealsSerializer
 
 
-# class UserListView(generics.ListCreateAPIView):
-#     queryset = Users.objects.all()
-#     serializer_class = UserSerializer

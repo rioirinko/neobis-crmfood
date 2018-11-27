@@ -15,17 +15,6 @@ class RolesSerializer(serializers.ModelSerializer):
         fields = ('id', 'name',)
 
 
-# class UsersSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = User
-#         fields = ('id', 'name', 'surname', 'roleid', 'login', 'password', 'email', 'dateofadd', 'phone',)
-
-# class UserSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = Users
-#         fields = ('email', 'username')
-
-
 class DepartmentsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Departments
