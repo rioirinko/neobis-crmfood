@@ -69,12 +69,4 @@ class User(AbstractBaseUser, PermissionsMixin):
         verbose_name_plural = 'Пользователи'
 
 
-# class Users(models.Model):
-#     name = models.CharField(max_length=100, verbose_name='Имя')
-#     surname = models.CharField(max_length=100, verbose_name='Фамилия')
-#     roleid = models.ForeignKey(Roles, on_delete=models.CASCADE, verbose_name='Должность', null=True)
-#     login = models.CharField(max_length=100, verbose_name='Логин')
-#     password = models.CharField(max_length=8, verbose_name='Пароль')
-#     email = models.CharField(max_length=100, verbose_name='Email')
-#     dateofadd = models.DateTimeField(blank=True, null=True, verbose_name='Дата добавления')
-#     phone = models.CharField(max_length=100, verbose_name='Телефон')
+
