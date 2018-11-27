@@ -18,13 +18,14 @@ from django.conf.urls import include, url
 from food import views
 from rest_framework.urlpatterns import format_suffix_patterns
 
+
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^tables/$', views.TablesViewSet.as_view(), name='tables',),
     url(r'^roles/$', views.RolesViewSet.as_view(), name='roles',),
     url(r'^departments/$', views.DepartmentsViewSet.as_view(), name='departments',),
-    url(r'^users/$', views.UsersViewSet.as_view(), name='users',),
+    # url(r'^users/$', views.UserViewSet.as_view(), name='users',),
     url(r'^category/$', views.CategoryViewSet.as_view(), name='category',),
     url(r'^statuses/$', views.StatusesViewSet.as_view(), name='statuses',),
     url(r'^percentage/$', views.ServicePercentageViewSet.as_view(), name='percentage',),
@@ -36,12 +37,13 @@ urlpatterns = [
     url(r'^tables/(?P<pk>[0-9]+)/$', views.TablesDetailView.as_view()),
     url(r'^roles/(?P<pk>[0-9]+)/$', views.RolesDetailView.as_view()),
     url(r'^departments/(?P<pk>[0-9]+)/$', views.DepartmentsDetailView.as_view()),
-    url(r'^users/(?P<pk>[0-9]+)/$', views.UsersDetailView.as_view()),
+    # url(r'^users/(?P<pk>[0-9]+)/$', views.UsersDetailView.as_view()),
     url(r'^category/(?P<pk>[0-9]+)/$', views.CategoryDetailView.as_view()),
     url(r'^statuses/(?P<pk>[0-9]+)/$', views.StatusesDetailView.as_view()),
     url(r'^percentage/(?P<pk>[0-9]+)/$', views.ServicePercentageDetailView.as_view()),
     url(r'^orders/(?P<pk>[0-9]+)/$', views.OrdersDetailView.as_view()),
     url(r'^checks/(?P<pk>[0-9]+)/$', views.ChecksDetailView.as_view()),
     url(r'^mealstoorders/(?P<pk>[0-9]+)/$', views.MealsToOrdersDetailView.as_view()),
+    url(r'^user/', include('users.urls', namespace='users')),
 ]
 urlpatterns = format_suffix_patterns(urlpatterns)

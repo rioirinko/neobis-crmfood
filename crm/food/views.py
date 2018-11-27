@@ -1,4 +1,5 @@
 from rest_framework import generics
+from users.models import Roles
 from .serializers import *
 from .models import *
 
@@ -41,14 +42,14 @@ class RolesDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = RolesSerializer
 
 
-class UsersViewSet(generics.ListCreateAPIView):
-    queryset = Users.objects.all()
-    serializer_class = UsersSerializer
+# class UsersViewSet(generics.ListCreateAPIView):
+#     queryset = Users.objects.all()
+#     serializer_class = UsersSerializer
 
-
-class UsersDetailView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Users.objects.all()
-    serializer_class = UsersSerializer
+#
+# class UsersDetailView(generics.RetrieveUpdateDestroyAPIView):
+#     queryset = Users.objects.all()
+#     serializer_class = UsersSerializer
 
 
 class TablesViewSet(generics.ListCreateAPIView):
@@ -114,3 +115,8 @@ class MealsToOrdersDetailView(generics.RetrieveUpdateDestroyAPIView):
 class MealsDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Meals.objects.all()
     serializer_class = MealsSerializer
+
+
+# class UserListView(generics.ListCreateAPIView):
+#     queryset = Users.objects.all()
+#     serializer_class = UserSerializer

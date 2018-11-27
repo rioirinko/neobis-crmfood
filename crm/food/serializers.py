@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from users.models import Roles, User
 from .models import *
 
 
@@ -14,10 +15,15 @@ class RolesSerializer(serializers.ModelSerializer):
         fields = ('id', 'name',)
 
 
-class UsersSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Users
-        fields = ('id', 'name', 'surname', 'roleid', 'login', 'password', 'email', 'dateofadd', 'phone',)
+# class UsersSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = User
+#         fields = ('id', 'name', 'surname', 'roleid', 'login', 'password', 'email', 'dateofadd', 'phone',)
+
+# class UserSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = Users
+#         fields = ('email', 'username')
 
 
 class DepartmentsSerializer(serializers.ModelSerializer):

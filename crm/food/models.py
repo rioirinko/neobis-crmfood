@@ -1,4 +1,5 @@
 from django.db import models
+from users.models import User
 
 
 class Tables(models.Model):
@@ -12,33 +13,26 @@ class Tables(models.Model):
         return self.name
 
 
-class Roles(models.Model):
-    name = models.CharField(max_length=100, verbose_name='Название')
+# class Roles(models.Model):
+#     name = models.CharField(max_length=100, verbose_name='Название')
+#
+#     class Meta:
+#         verbose_name = 'Должность'
+#         verbose_name_plural = 'Должности'
+#
+#     def __str__(self):
+#         return self.name
 
-    class Meta:
-        verbose_name = 'Должность'
-        verbose_name_plural = 'Должности'
 
-    def __str__(self):
-        return self.name
-
-
-class Users(models.Model):
-    name = models.CharField(max_length=100, verbose_name='Имя')
-    surname = models.CharField(max_length=100, verbose_name='Фамилия')
-    roleid = models.ForeignKey(Roles, on_delete=models.CASCADE, verbose_name='Должность', null=True)
-    login = models.CharField(max_length=100, verbose_name='Логин')
-    password = models.CharField(max_length=8, verbose_name='Пароль')
-    email = models.CharField(max_length=100, verbose_name='Email')
-    dateofadd = models.DateTimeField(blank=True, null=True, verbose_name='Дата добавления')
-    phone = models.CharField(max_length=100, verbose_name='Телефон')
-
-    class Meta:
-        verbose_name = 'Пользователь'
-        verbose_name_plural = 'Пользователи'
-
-    def __str__(self):
-        return self.name
+# class Users(models.Model):
+#     name = models.CharField()
+#
+#     class Meta:
+#         verbose_name = 'Пользователь'
+#         verbose_name_plural = 'Пользователи'
+#
+#     def __str__(self):
+#         return self.name
 
 
 class Departments(models.Model):
@@ -98,7 +92,7 @@ class Meals(models.Model):
 
 
 class Orders(models.Model):
-    waiterid = models.ForeignKey(Users, on_delete=models.CASCADE, verbose_name='Официант', null=True,)
+    waiterid = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Официант', null=True,)
     tablesid = models.ForeignKey(Tables, on_delete=models.CASCADE, verbose_name='Стол', null=True,)
     statusid = models.ForeignKey(Statuses, on_delete=models.CASCADE, verbose_name='Статус', null=True, )
     mealsid = models.ForeignKey(Meals, on_delete=models.CASCADE, verbose_name='Питание', null=True, )
