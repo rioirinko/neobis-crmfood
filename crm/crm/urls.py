@@ -44,6 +44,6 @@ urlpatterns = [
     url(r'^orders/(?P<pk>[0-9]+)/$', views.OrdersDetailView.as_view()),
     url(r'^checks/(?P<pk>[0-9]+)/$', views.ChecksDetailView.as_view()),
     url(r'^mealstoorders/(?P<pk>[0-9]+)/$', views.MealsToOrdersDetailView.as_view()),
-    url(r'^user/', include('users.urls', namespace='users')),
+    url(r'^users/', include('users.urls', namespace='authentication')),
 ]
 urlpatterns = format_suffix_patterns(urlpatterns)

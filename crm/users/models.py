@@ -5,6 +5,9 @@ from django.utils import timezone
 from django.contrib.auth.models import (
     AbstractBaseUser, PermissionsMixin
 )
+import jwt
+from datetime import datetime, timedelta
+from django.conf import settings
 
 
 class Roles(models.Model):
@@ -23,7 +26,7 @@ class UserManager(BaseUserManager):
     def _create_user(self, login, password, **extra_fields):
 
         if not login:
-            raise ValueError('The given email must be set')
+            raise ValueError('The given login must be set')
         try:
             with transaction.atomic():
                 user = self.model(login=login, **extra_fields)
@@ -45,8 +48,8 @@ class UserManager(BaseUserManager):
 
 
 class User(AbstractBaseUser, PermissionsMixin):
-    login = models.CharField(max_length=50, unique=True, verbose_name='Логин')
-    email = models.EmailField(max_length=50, unique=True, verbose_name='Email')
+    login = models.CharField(db_index=True, max_length=50, unique=True, verbose_name='Логин')
+    email = models.EmailField(db_index=True, max_length=50, unique=True, verbose_name='Email')
     name = models.CharField(max_length=100, blank=True, verbose_name='Имя')
     surname = models.CharField(max_length=100, blank=True, verbose_name='Фамилия')
     roles = models.ForeignKey(Roles, on_delete=models.CASCADE, verbose_name='Должность', null=True)
@@ -54,6 +57,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     date_of_add = models.DateTimeField(default=timezone.now, verbose_name='Дата добавления')
+    updated_at = models.DateTimeField(auto_now=True)
 
     objects = UserManager()
 
@@ -68,5 +72,24 @@ class User(AbstractBaseUser, PermissionsMixin):
         verbose_name = 'Пользователь'
         verbose_name_plural = 'Пользователи'
 
+    def __str__(self):
+        return self.login
 
+    @property
+    def token(self):
+        return self._generate_jwt_token()
+
+    def get_full_name(self):
+        return self.email
+
+    def get_short_name(self):
+        return self.email
+
+    def _generate_jwt_token(self):
+        dt = datetime.now() + timedelta(days=60)
+        token = jwt.encode({
+            'id': self.pk,
+            'exp': int(dt.strftime('%s'))
+        }, settings.SECRET_KEY, algorithm='HS256')
+        return token.decode('utf-8')
 
