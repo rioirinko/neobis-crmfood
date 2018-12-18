@@ -1,0 +1,72 @@
+web:
+  restart: always
+  build: ./web/
+  expose:
+    - "8000"
+  links:
+    - postgres:postgres
+    - redis:redis
+  env_file: env
+  volumes:
+    - ./web:/data/web
+  command: /usr/bin/gunicorn crm.wsgi:application -w 2 -b :8000postgresql:
+  image: postgres:9.3
+  env_file: .env
+  volumes:
+    - ./dockerfiles/pgdata:/var/lib/postgresql/data/pgdata
+  ports:
+    - "5433:5432"
+
+project:
+  build: ./
+  env_file: .env
+  working_dir: /opt/project
+  command: bash -c "sleep 3 && /etc/init.d/ssh start && supervisord -n"
+  volumes:
+    - ./src:/opt/project
+    - ./dockerfiles/sshdconf/sshd_config:/etc/ssh/sshd_config
+    - ./dockerfiles/id_rsa.pub:/root/.ssh/authorized_keys
+    - /home/USERNAME/.pycharm_helpers/:/root/.pycharm_helpers/
+    - ./supervisord.conf:/etc/supervisord.conf
+    - ./djangod.conf:/etc/djangod.conf
+  links:
+    - postgresql
+  ports:
+    - "2225:22"
+    - "8005:8000"
+
+nginx:
+  restart: always
+  build: ./nginx/
+  ports:
+    - "80:80"
+  volumes_from:
+    - web
+  links:
+    - web:web
+
+postgres:
+  restart: always
+  image: postgres:latest
+  volumes_from:
+    - data
+  volumes:
+    - ./postgres/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+    - ./backups/postgresql:/backup
+  env_file:
+    - env
+  expose:
+    - "5432"
+
+redis:
+  restart: always
+  image: redis:latest
+  expose:
+    - "6379"
+
+data:
+  restart: always
+  image: alpine
+  volumes:
+    - /var/lib/postgresql
+  command: "true"
