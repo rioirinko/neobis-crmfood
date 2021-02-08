@@ -15,7 +15,7 @@ docker-pycreds==0.4.0
 dockerpty==0.4.1
 docopt==0.6.2
 gunicorn==19.9.0
-httplib2==0.12.0
+httplib2==0.19.0
 idna==2.8
 Markdown==3.0.1
 psycopg2==2.7.6.1
